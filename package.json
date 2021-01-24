@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/roshanpaturkar/task-manager-api/issues"
   },
-  "homepage": "https://github.com/roshanpaturkar/task-manager-api#readme"
+  "homepage": "https://github.com/roshanpaturkar/task-manager-api#readme",
+  "dependencies": {
+    "mongodb": "^3.6.3"
+  }
 }
