@@ -17,5 +17,10 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     db.collection('users').insertOne({
         name: 'Roshan Paturkar',
         age: 25
+    }, (error, result) => {
+        if (error) {
+            return console.log('Unable to insert document!');
+        }
+        console.log(result.ops);
     })
 })
