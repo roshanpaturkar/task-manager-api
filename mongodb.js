@@ -35,7 +35,7 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     // db.collection('users').insertMany([
     //     {
     //         name: 'Lutika',
-    //         ager: 23
+    //         age: 23
     //     }, {
     //         name: 'Ashish',
     //         age: 25
