@@ -1,9 +1,9 @@
 const express = require('express')
 require('./db/mongoose')
+const {ObjectID} = require('mongodb')
 
 const User = require('./models/user')
 const Task = require('./models/task')
-const { request, response } = require('express')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -23,6 +23,19 @@ app.post('/users', (request, response) => {
 app.get('/users', (request, response) => {
     User.find({}).then((users) => {
         response.send(users)
+    }).catch((error) => {
+        response.status(500).send()
+    })
+})
+
+app.get('/users/:id', (request, response) => {
+    const _id = request.params.id
+
+    User.findById(_id).then((user) => {
+        if (!user) {
+            return response.status(404).send()
+        }
+        response.send(user)
     }).catch((error) => {
         response.status(500).send()
     })
