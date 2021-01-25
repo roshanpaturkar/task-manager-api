@@ -78,10 +78,22 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     return console.log(user);
     // })
 
-    db.collection('users').find({age: 25}).toArray((error, users) => {
-        if (error) {
-            return console.log('Unabale to fetch the value');
-        }
-        return console.log(users);
-    })
+    // db.collection('users').find({age: 25}).toArray((error, users) => {
+    //     if (error) {
+    //         return console.log('Unabale to fetch the value');
+    //     }
+    //     return console.log(users);
+    // })
+
+    db.collection('users').updateOne({
+            name: 'Roshan Paturkar'
+        }, {
+            $set: {
+                name: 'Roshan'
+            }
+        }).then((result) => {
+            console.log(result);
+        }).catch((error) => {
+            console.log(error);
+        })
 })
