@@ -6,57 +6,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useCreateIndex: true
 })
 
-const User = mongoose.model('User', {
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-        validate (value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Invalid email!')
-            }
-        }
-    },
-    password: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 7,
-        validate (value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error('Password cannot contain "password"!')
-            }
-        }
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate (value) {
-            if (value < 0) {
-                throw new Error('Age must be positive number!')
-            }
-        }
-    }
-})
-
-// const me = new User({
-//     name: '  Roshan Paturkar   ',
-//     email: '    PATRKAR@gmail.com',
-//     password: 'anapple'
-// })
-
-// me.save().then(() => {
-//     console.log(me);
-// }).catch((error) => {
-//     console.log(error);
-// })
-
 const Task = mongoose.model('Task', {
     description: {
         type: String,
@@ -67,14 +16,4 @@ const Task = mongoose.model('Task', {
         type: Boolean,
         default: false
     }
-})
-
-const task = new Task({
-    description: '           Build API         '
-})
-
-task.save().then(() => {
-    console.log(task);
-}).catch((error) => {
-    console.log(error);
 })
