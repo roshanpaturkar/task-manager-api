@@ -52,7 +52,7 @@ app.patch('/users/:id', async (request, response) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return response.status(400).send({error: 'Invalid  updates!'})
+        return response.status(400).send({error: 'Invalid updates!'})
     }
 
     try {
@@ -63,7 +63,7 @@ app.patch('/users/:id', async (request, response) => {
         }
         response.send(user)
     } catch (error) {
-        response.status(400).send()
+        response.status(400).send(error)
     }
 })
 
@@ -99,6 +99,27 @@ app.get('/tasks/:id', async (request, response) => {
         response.send(task)
     } catch (error) {
         response.status(500).send()
+    }
+})
+
+app.patch('/tasks/:id', async (request, response) => {
+    const updates = Object.keys(request.body)
+    const allowedUpdates = ['description', 'completed']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return response.status(400).send({error: 'Invalid updates!'})
+    }
+
+    try {
+        const task = await Task.findByIdAndUpdate(request.params.id, request.body, {new: true, runValidators: true})
+
+        if (!task) {
+            return response.status(404).send()
+        }
+        response.send(task)
+    } catch (error) {
+        response.status(400).send(error)
     }
 })
 
