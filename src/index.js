@@ -4,6 +4,7 @@ const {ObjectID} = require('mongodb')
 
 const User = require('./models/user')
 const Task = require('./models/task')
+const { request, response } = require('express')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -42,6 +43,27 @@ app.get('/users/:id', async (request, response) => {
         response.send(user)
     } catch (error) {
         response.status(500).send()
+    }
+})
+
+app.patch('/users/:id', async (request, response) => {
+    const updates = Object.keys(request.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return response.status(400).send({error: 'Invalid  updates!'})
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate(request.params.id, request.body, {new: true, runValidators: true})
+
+        if (!user) {
+            return response.status(404).send()
+        }
+        response.send(user)
+    } catch (error) {
+        response.status(400).send()
     }
 })
 
