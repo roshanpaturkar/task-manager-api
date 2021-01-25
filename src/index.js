@@ -10,35 +10,38 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.post('/users', (request, response) => {
+app.post('/users', async (request, response) => {
     const user = new User(request.body)
 
-    user.save().then(() => {
+    try {
+        await user.save()
         response.status(201).send(user)
-    }).catch((error) => {
+    } catch (error) {
         response.status(400).send(error)
-    })
+    }
 })
 
-app.get('/users', (request, response) => {
-    User.find({}).then((users) => {
+app.get('/users', async (request, response) => {
+    try {
+        const users = await User.find({})
         response.send(users)
-    }).catch((error) => {
+    } catch (error) {
         response.status(500).send()
-    })
+    }
 })
 
-app.get('/users/:id', (request, response) => {
+app.get('/users/:id', async (request, response) => {
     const _id = request.params.id
 
-    User.findById(_id).then((user) => {
+    try {
+        const user = await User.findById(_id)
         if (!user) {
             return response.status(404).send()
         }
         response.send(user)
-    }).catch((error) => {
+    } catch (error) {
         response.status(500).send()
-    })
+    }
 })
 
 app.post('/tasks', (request, response) => {
