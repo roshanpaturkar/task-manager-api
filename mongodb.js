@@ -71,10 +71,17 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     return console.log(user);
     // })
 
-    db.collection('users').findOne({_id: new ObjectID("600db8767503d70958d766f9")}, (error, user) => {
+    // db.collection('users').findOne({_id: new ObjectID("600db8767503d70958d766f9")}, (error, user) => {
+    //     if (error) {
+    //         return console.log('Unabale to fetch the value');
+    //     }
+    //     return console.log(user);
+    // })
+
+    db.collection('users').find({age: 25}).toArray((error, users) => {
         if (error) {
             return console.log('Unabale to fetch the value');
         }
-        return console.log(user);
+        return console.log(users);
     })
 })
