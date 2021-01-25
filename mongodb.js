@@ -1,18 +1,18 @@
 //  CRUD Operation's in MongoDB using NodeJS
 // Create Read Update Delete
 
-const {MongoClient, ObjectID} = require('mongodb')
+const {MongoClient, ObjectID, Long} = require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager-api'
 
-const id = new ObjectID
+// const id = new ObjectID
 
-console.log(id);
-console.log(id.id);
-console.log(id.id.length);
-console.log(id.toHexString().length);
-console.log(id.getTimestamp());
+// console.log(id);
+// console.log(id.id);
+// console.log(id.id.length);
+// console.log(id.toHexString().length);
+// console.log(id.getTimestamp());
 
 MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     if (error) {
@@ -63,4 +63,11 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     }
     //     console.log(result.ops);
     // })
+    
+    db.collection('users').findOne({name: 'Roshan'}, (error, user) => {
+        if (error) {
+            return console.log('Unabale to fetch the value');
+        }
+        return console.log(user);
+    })
 })
