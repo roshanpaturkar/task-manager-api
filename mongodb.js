@@ -21,6 +21,7 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
 
     const db = client.db(databaseName)
 
+    //Insert Operation in MongoDB (C from CRUD)
     // db.collection('users').insertOne({
     //     name: 'Roshan Paturkar',
     //     age: 25
@@ -64,6 +65,7 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     console.log(result.ops);
     // })
 
+    //Read Operation in MongoDB (R from CRUD)
     // db.collection('users').findOne({name: 'Roshan'}, (error, user) => {
     //     if (error) {
     //         return console.log('Unabale to fetch the value');
@@ -85,6 +87,7 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     return console.log(users);
     // })
 
+    //Update Operation in MongoDB (U from CRUD)
     // db.collection('users').updateOne({
     //         name: 'Roshan Paturkar'
     //     }, {
@@ -109,6 +112,7 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //         console.log(error);
     //     })
 
+    //Delete Operation in MongoDB (D from CRUD)
     db.collection('users').deleteOne({
         age: 24
     }).then((result) => {
