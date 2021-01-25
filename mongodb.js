@@ -3,9 +3,18 @@
 
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
+const ObjectID = mongodb.ObjectID
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager-api'
+
+const id = new ObjectID
+
+console.log(id);
+console.log(id.id);
+console.log(id.id.length);
+console.log(id.toHexString().length);
+console.log(id.getTimestamp());
 
 MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     if (error) {
@@ -39,21 +48,21 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     console.log(result.ops);
     // })
 
-    db.collection('tasks').insertMany([
-        {
-            description: 'Go to sleep',
-            completed: true
-        }, {
-            description: 'Go to tatti',
-            completed: false
-        }, {
-            description: 'Kiss me',
-            completed: true
-        }
-    ], (error, result) => {
-        if (error) {
-             return console.log('Unable to insert documents!');
-        }
-        console.log(result.ops);
-    })
+    // db.collection('tasks').insertMany([
+    //     {
+    //         description: 'Go to sleep',
+    //         completed: true
+    //     }, {
+    //         description: 'Go to tatti',
+    //         completed: false
+    //     }, {
+    //         description: 'Kiss me',
+    //         completed: true
+    //     }
+    // ], (error, result) => {
+    //     if (error) {
+    //          return console.log('Unable to insert documents!');
+    //     }
+    //     console.log(result.ops);
+    // })
 })
