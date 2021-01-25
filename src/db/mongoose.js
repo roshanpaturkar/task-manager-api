@@ -21,7 +21,7 @@ const User = mongoose.model('User', {
 
 // me.save().then(() => {
 //     console.log(me);
-// }).catch(() => {
+// }).catch((error) => {
 //     console.log(error);
 // })
 
