@@ -85,27 +85,43 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     return console.log(users);
     // })
 
-    db.collection('users').updateOne({
-            name: 'Roshan Paturkar'
-        }, {
-            $set: {
-                name: 'Roshan'
-            }
-        }).then((result) => {
-            console.log(result);
-        }).catch((error) => {
-            console.log(error);
-        })
+    // db.collection('users').updateOne({
+    //         name: 'Roshan Paturkar'
+    //     }, {
+    //         $set: {
+    //             name: 'Roshan'
+    //         }
+    //     }).then((result) => {
+    //         console.log(result);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
 
-    db.collection('users').updateMany({
-            name: 'Roshan'
-        }, {
-            $set: {
-                name: 'Roshan Paturkar'
-            }
-        }).then((result) => {
-            console.log(result);
-        }).catch((error) => {
-            console.log(error);
-        })
+    // db.collection('users').updateMany({
+    //         name: 'Roshan'
+    //     }, {
+    //         $set: {
+    //             name: 'Roshan Paturkar'
+    //         }
+    //     }).then((result) => {
+    //         console.log(result);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
+
+    db.collection('users').deleteOne({
+        age: 24
+    }).then((result) => {
+        console.log(result);
+    }).catch((error) => {
+        console.log(error);
+    })
+
+    db.collection('users').deleteMany({
+        age: 23
+    }).then((result) => {
+        console.log(result);
+    }).catch((error) => {
+        console.log(error);
+    })
 })
