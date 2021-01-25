@@ -16,10 +16,21 @@ const User = mongoose.model('User', {
         type: String,
         required: true,
         trim: true,
-        lowerCase: true,
+        lowercase: true,
         validate (value) {
             if (!validator.isEmail(value)) {
                 throw new Error('Invalid email!')
+            }
+        }
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        minLength: 7,
+        validate (value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('Password cannot contain "password"!')
             }
         }
     },
@@ -36,7 +47,8 @@ const User = mongoose.model('User', {
 
 const me = new User({
     name: '  Roshan Paturkar   ',
-    email: '    PATRKAR@gmail.com'
+    email: '    PATRKAR@gmail.com',
+    password: 'anapple'
 })
 
 me.save().then(() => {
