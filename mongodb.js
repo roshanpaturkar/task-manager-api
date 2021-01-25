@@ -96,4 +96,16 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
         }).catch((error) => {
             console.log(error);
         })
+
+    db.collection('users').updateMany({
+            name: 'Roshan'
+        }, {
+            $set: {
+                name: 'Roshan Paturkar'
+            }
+        }).then((result) => {
+            console.log(result);
+        }).catch((error) => {
+            console.log(error);
+        })
 })
