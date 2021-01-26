@@ -8,7 +8,8 @@ router.post('/users', async (request, response) => {
 
     try {
         await user.save()
-        response.status(201).send(user)
+        const token = await user.generateAuthToken()
+        response.status(201).send({user, token})
     } catch (error) {
         response.status(400).send(error)
     }
