@@ -1,3 +1,4 @@
+const { request, response } = require('express')
 const express = require('express')
 const User = require('../models/user')
 const router = new express.Router()
@@ -10,6 +11,15 @@ router.post('/users', async (request, response) => {
         response.status(201).send(user)
     } catch (error) {
         response.status(400).send(error)
+    }
+})
+
+router.post('/users/login', async (request, response) => {
+    try {
+        const user = await User.findUserByCredentials(request.body.email, request.body.password)
+        response.send(user)
+    } catch (error) {
+        response.status(400).send()
     }
 })
 
