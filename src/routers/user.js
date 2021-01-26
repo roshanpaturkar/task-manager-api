@@ -47,6 +47,10 @@ router.patch('/users/:id', async (request, response) => {
     }
 
     try {
+        //this method by pass save() of mongoose and do direct operations on database, in result we can not trigger some important methods
+        //like userSchema.pre() and can not do any pre-operations before updates. thats why we use another way
+        //const user = await User.findByIdAndUpdate(request.params.id, request.body, {new: true, runValidators: true})
+
         const user = await User.findById(request.params.id)
 
         updates.forEach((update) => user[update] = request.body[update])
