@@ -35,7 +35,6 @@ router.post('/users/logout', auth, async (request, response) => {
         await request.user.save()
         response.send()
     } catch (error) {
-        console.log(error);
         response.status(500).send(error)
     }
 })
