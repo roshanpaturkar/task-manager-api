@@ -92,6 +92,7 @@ userSchema.statics.findUserByCredentials = async (email, password) => {
     return user
 }
 
+//Hash the password text before saving password
 userSchema.pre('save', async function (next) {
     const user = this
     if (user.isModified('password')) {
