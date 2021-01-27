@@ -26,6 +26,20 @@ router.post('/users/login', async (request, response) => {
     }
 })
 
+router.post('/users/logout', auth, async (request, response) => {
+    try {
+        request.user.tokens = request.user.tokens.filter((token) => {
+            return token.token !== request.token
+        })
+
+        await request.user.save()
+        response.send()
+    } catch (error) {
+        console.log(error);
+        response.status(500).send(error)
+    }
+})
+
 router.get('/users/me', auth, async (request, response) => {
     response.send(request.user)
 })
