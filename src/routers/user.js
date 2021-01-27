@@ -39,6 +39,16 @@ router.post('/users/logout', auth, async (request, response) => {
     }
 })
 
+router.post('/users/logoutAll', auth, async (request, response) => {
+    try {
+        request.user.tokens = []
+        await request.user.save()
+        response.send()
+    } catch (error) {
+        response.status(500).send()
+    }
+})
+
 router.get('/users/me', auth, async (request, response) => {
     response.send(request.user)
 })
