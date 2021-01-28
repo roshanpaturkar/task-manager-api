@@ -2,6 +2,7 @@ const express = require('express')
 const multer = require('multer')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const { request, response } = require('express')
 const router = new express.Router()
 
 router.post('/users', async (request, response) => {
@@ -97,12 +98,27 @@ const upload = multer ({
         }
     })
 
-router.post('/user/me/avatar', auth, upload.single('avatar'), async (request, response) => {
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (request, response) => {
     request.user.avatar = request.file.buffer
     await request.user.save()
     response.send()
 }, (error, request, response, next) => {
     response.status(400).send({ error: error.message })
+})
+
+router.delete('/users/me/avatar', auth, async (request, response) => {
+    try {
+
+        if (!request.user.avatar) {
+            response.status(404).send()
+        }
+
+        request.user.avatar = undefined
+        await request.user.save()
+        response.send()
+    } catch (error) {
+        response.status(500).send()
+    }
 })
 
 module.exports = router
