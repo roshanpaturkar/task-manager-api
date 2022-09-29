@@ -1,23 +1,54 @@
-const sgMail = require('@sendgrid/mail')
+const axios = require('axios');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const url = process.env.EMAIL_GATEWAY
+const hostId = process.env.EMAIL_HOST_ID
+
+const sendMail = (data) => {
+    const config = {
+        method: 'post',
+        url: url,
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 const sendWelcomeEmail = (email, name) => {
-    sgMail.send({
-        to: email,
-        from: 'paturkarr@gmail.com',
-        subject: 'Thanks for joining!',
-        text: `Hello ${name}! \nWelcome to the Task Manager App, We are happy to manage your tasks for you and keep you up to date!`
-    })
+    const data = JSON.stringify({
+        host_id: hostId,
+        name: 'Omnimemor',
+        to: [
+            email
+        ],
+        subject: `Welcome to the app, ${name}!`,
+        body: `Welcome to the app, ${name}! \nLet me know how you get along with the app. \n\nBest regards, \nOmnimemor Team`
+    });
+    
+    sendMail(data);
 }
 
 const sendGoodByeEmail = (email, name) => {
-    sgMail.send({
-        to: email,
-        from: 'paturkarr@gmail.com',
-        subject: `Good Bye, ${name}!`,
-        text: `Bye ${name}! \nIt's very to tough to say good bye to you. Hope we will meet soon. \nWe are deleting your private data from our server for your safety. Have great life ahead!`
-    })
+    const data = JSON.stringify({
+        host_id: hostId,
+        name: 'Omnimemor',
+        to: [
+            email
+        ],
+        subject: `Sorry to see you go ${name}!`,
+        body: `Hello ${name}! \nWe are sorry to see you go, please let us know what we can do to improve our service! \nWe are deleting your private data from our server for your safety. \nThank you for using our service! \n\nBest regards, \nOmnimemor Team`
+    });
+    
+    sendMail(data);
 }
 
 module.exports = {
