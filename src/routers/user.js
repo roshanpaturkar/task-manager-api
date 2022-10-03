@@ -58,7 +58,7 @@ router.get('/users/me', auth, async (request, response) => {
 
 router.patch('/users/me', auth, async (request, response) => {
     const updates = Object.keys(request.body)
-    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const allowedUpdates = ['name', 'email', 'age']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -75,6 +75,21 @@ router.patch('/users/me', auth, async (request, response) => {
 
         response.send(request.user)
     } catch (error) {
+        response.status(400).send(error)
+    }
+})
+
+router.patch('/users/me/password', auth, async (request, response) => {
+    try {
+        const { oldPassword, newPassword } = request.body
+        const user = await User.findUserByCredentials(request.user.email, oldPassword)
+
+        user.password = newPassword
+        await user.save()
+
+        response.send()
+    } catch (error) {
+        console.log(error);
         response.status(400).send(error)
     }
 })
