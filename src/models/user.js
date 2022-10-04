@@ -22,6 +22,17 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    mobile: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        validate(value) {
+            if (!validator.isMobilePhone(value, ["en-IN"])) {
+                throw new Error('Invalid mobile number!')
+            }
+        }
+    },
     password: {
         type: String,
         required: true,
