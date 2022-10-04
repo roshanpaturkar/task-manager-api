@@ -96,11 +96,14 @@ router.patch('/users/me/password', auth, async (request, response) => {
 
 router.delete('/users/me', auth, async (request, response) => {
     try {
+        const password = request.body.password
+        await User.findUserByCredentials(request.user.email, password)
+
         await request.user.remove()
         sendGoodByeEmail(request.user.email, request.user.name)
         response.send(request.user)
     } catch (error) {
-        response.status(500).send()   
+        response.status(400).send()   
     }
 })
 
