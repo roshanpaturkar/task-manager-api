@@ -1,4 +1,4 @@
-var whitelist = ['http://localhost.com']
+var whitelist = ['https://omnimemor.web.app']
 
 var corsOptions = {
   origin: function (origin, callback) {
