@@ -1,9 +1,11 @@
 const express = require('express')
 const multer = require('multer')
 const sharp = require('sharp')
+const fs = require('fs');
 const User = require('../models/user')
 const auth = require('../middleware/auth')
-const { sendWelcomeEmail, sendGoodByeEmail } = require('../emails/account')
+const { sendWelcomeEmail, sendGoodByeEmail } = require('../emails/account');
+const { listeners } = require('process');
 const router = new express.Router()
 
 router.post('/users', async (request, response) => {
@@ -146,12 +148,20 @@ router.delete('/users/me/avatar', auth, async (request, response) => {
 router.get('/users/:id/avatar', async (request, response) => {
     try {
         const user = await User.findById(request.params.id)
+        let avatar = {};
 
-        if (!user || !user.avatar) {
-            throw new Error()
+        if (!user) {
+            throw new Error('No user or avatar')
         }
+
+        if (!user.avatar) {
+            avatar = fs.readFileSync('./src/assets/images/avatar.png')
+        } else {
+            avatar = user.avatar
+        }
+
         response.set('Content-Type', 'image/png')
-        response.send(user.avatar)
+        response.send(avatar)
     } catch (error) {
         response.status(404).send()
     }
