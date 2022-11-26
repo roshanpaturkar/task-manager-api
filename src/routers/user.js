@@ -87,6 +87,7 @@ router.patch('/users/me/password', auth, async (request, response) => {
         const user = await User.findUserByCredentials(request.user.email, oldPassword)
 
         user.password = newPassword
+        user.tokens = []
         await user.save()
 
         response.send()
