@@ -1,3 +1,5 @@
 node_modules/
-push.cmd
+deploy.cmd
 config/
+.deta
+.env

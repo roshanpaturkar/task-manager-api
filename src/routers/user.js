@@ -159,9 +159,11 @@ router.get('/users/:id/avatar', async (request, response) => {
         } else {
             avatar = user.avatar
         }
-
-        response.set('Content-Type', 'image/png')
-        response.send(avatar)
+        response.send({
+            encoding: 'base64',
+            contentType: 'image/png',
+            image: avatar
+        })
     } catch (error) {
         response.status(404).send()
     }
