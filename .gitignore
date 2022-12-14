@@ -3,3 +3,4 @@ deploy.cmd
 config/
 .deta
 .env
+open.cmd
